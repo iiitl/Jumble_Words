@@ -21,7 +21,16 @@ class GameViewModel : ViewModel() {
     private val _currentScrambledWord = MutableLiveData<String>()
     val currentScrambledWord: LiveData<String>
         get() = _currentScrambledWord
-
+    public fun shuffle(str: String): String {
+        val charArray = str.toCharArray()
+        for (i in charArray.indices) {
+            val randomIndex = charArray.indices.random()
+            val temp = charArray[i]
+            charArray[i] = charArray[randomIndex]
+            charArray[randomIndex] = temp
+        }
+        return String(charArray)
+    }
 
     private fun getNextWord() {
         currentWord = allWordsList.random()
@@ -29,7 +38,7 @@ class GameViewModel : ViewModel() {
         if (wordsList.contains(currentWord)) {
             getNextWord()
         } else {
-            _currentScrambledWord.value = currentWord
+            _currentScrambledWord.value = shuffle(currentWord)
             _currentWordCount.value = (_currentWordCount.value)?.inc()
             wordsList.add(currentWord)
         }
