@@ -1,13 +1,19 @@
 package com.example.android.unscramble.ui.game
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.android.unscramble.MainActivity
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -47,6 +53,11 @@ class GameFragment : Fragment() {
 
         if (viewModel.isUserWordCorrect(playerWord)) {
             setErrorTextField(false)
+            Toast.makeText(this.context, "correct", Toast.LENGTH_SHORT).show()
+
+
+
+
             if (!viewModel.nextWord()) {
                 showFinalScoreDialog()
             }
@@ -90,10 +101,25 @@ class GameFragment : Fragment() {
     private fun setErrorTextField(error: Boolean) {
         if (error) {
 //
+           showCustomDialog(requireContext())
+
+
         } else {
 //
         }
     }
+    fun showCustomDialog(context: Context) {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.wrong)
 
+        // Accessing views in the custom dialog layout
+        val closeButton = dialog.findViewById<Button>(R.id.buttonClose)
+        closeButton.setOnClickListener {
+            dialog.dismiss() // Dismiss dialog when close button is clicked
+        }
+
+        dialog.show()
+    }
 
 }
