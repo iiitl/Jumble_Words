@@ -9,7 +9,7 @@ class GameViewModel : ViewModel() {
 
     private var wordsList: MutableList<String> = mutableListOf()
     private lateinit var currentWord: String
-
+    var answers = arrayOf<String>()
     private var _score = MutableLiveData(0)
     val score: LiveData<Int>
         get() = _score
@@ -25,7 +25,7 @@ class GameViewModel : ViewModel() {
 
     private fun getNextWord() {
         currentWord = allWordsList.random()
-
+        answers += currentWord;
         if (wordsList.contains(currentWord)) {
             getNextWord()
         } else {
