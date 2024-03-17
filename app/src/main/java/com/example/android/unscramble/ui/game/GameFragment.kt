@@ -1,16 +1,23 @@
 package com.example.android.unscramble.ui.game
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+
 
 /**
  * Fragment where the game is played, contains the game logic.
@@ -42,12 +49,22 @@ class GameFragment : Fragment() {
 
     }
 
+
     private fun onSubmitWord() {
         val playerWord = binding.textInputEditText.text.toString()
 
         if (viewModel.isUserWordCorrect(playerWord)) {
             setErrorTextField(false)
+            val fadeInAnimator = ObjectAnimator.ofFloat(binding.textViewUnscrambledWord, "alpha", 0f, 1f)
+            fadeInAnimator.duration = 1000 // Adjust duration as needed
+
+            // Create ObjectAnimator for fade out
+            fadeInAnimator.start()
+
+            // Delay the start of the fade-out animation using Handler
+
             if (!viewModel.nextWord()) {
+
                 showFinalScoreDialog()
             }
         }
@@ -56,9 +73,18 @@ class GameFragment : Fragment() {
         }
     }
 
+
+
     private fun onSkipWord() {
         if (viewModel.nextWord()) {
+
             setErrorTextField(false)
+            val fadeInAnimator = ObjectAnimator.ofFloat(binding.textViewUnscrambledWord, "alpha", 0f, 1f)
+            fadeInAnimator.duration = 1000 // Adjust duration as needed
+
+            // Create ObjectAnimator for fade out
+            fadeInAnimator.start()
+
         } else {
             showFinalScoreDialog()
         }
