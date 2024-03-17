@@ -1,5 +1,6 @@
 package com.example.android.unscramble.ui.game
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.fragment.app.viewModels
 import com.example.android.unscramble.R
 import com.example.android.unscramble.databinding.GameFragmentBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
 
 /**
  * Fragment where the game is played, contains the game logic.
@@ -88,10 +90,12 @@ class GameFragment : Fragment() {
     }
 
     private fun setErrorTextField(error: Boolean) {
+//        TextInputLayout txt = findViewById(R.id.textField)
         if (error) {
-//
+            binding.textField.error = "wrong";
+//          .setTextColor(Color.RED);
         } else {
-//
+            binding.textField.error = "";
         }
     }
 
